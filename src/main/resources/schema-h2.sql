@@ -1,0 +1,6 @@
+CREATE TABLE expenses (
+  id UUID PRIMARY KEY,
+  description VARCHAR(255) NOT NULL,
+  value DOUBLE NOT NULL,
+  date DATETIME NOT NULL
+);
