@@ -1,0 +1,38 @@
+table.expenses {
+    width: 100%;
+}
+
+table.expenses thead th span.table-header {
+    color: #676060;
+    cursor: pointer;
+}
+
+table.expenses thead th:nth-child(1) {
+    width: 20%;
+}
+
+table.expenses thead th:nth-child(2) {
+    width: 50%;
+}
+
+table.expenses thead th:nth-child(3) {
+    width: 15%;
+}
+
+table.expenses thead th:nth-child(4) {
+    width: 15%;
+}
+
+table.expenses td.action span {
+    margin: 0 20px;
+    cursor: pointer;
+    color: #676060;
+}
+
+table.expenses .add-button {
+    width: 80%;
+}
+
+form.expenses-form .date-input {
+    padding-top: 8px;
+}

@@ -1,0 +1,115 @@
+<div>
+    <div uib-alert ng-repeat="alert in ctrl.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="ctrl.closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+
+    <table class="expenses table">
+        <thead>
+        <tr>
+            <th>
+                <span class="table-header" ng-click="ctrl.sortType = 'date'; ctrl.sortReverse = !ctrl.sortReverse">
+                    Date
+                    <span ng-show="ctrl.sortType == 'date' && !ctrl.sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                    <span ng-show="ctrl.sortType == 'date' && ctrl.sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </span>
+            </th>
+            <th>
+                <span class="table-header" ng-click="ctrl.sortType = 'description'; ctrl.sortReverse = !ctrl.sortReverse">
+                    Description
+                    <span ng-show="ctrl.sortType == 'description' && !ctrl.sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                    <span ng-show="ctrl.sortType == 'description' && ctrl.sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </span>
+            </th>
+            <th>
+                <span class="table-header" ng-click="ctrl.sortType = 'value'; ctrl.sortReverse = !ctrl.sortReverse">
+                    Value
+                    <span ng-show="ctrl.sortType == 'value' && !ctrl.sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                    <span ng-show="ctrl.sortType == 'value' && ctrl.sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                </span>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="expenses in ctrl.expensesList | orderBy:ctrl.sortType:ctrl.sortReverse">
+            <td>
+                <div ng-show="ctrl.editId !== expenses.id.id">
+                    {{ctrl.moment(expenses.date).format('DD/MM/YYYY')}}
+                </div>
+
+                <p class="input-group date-input" ng-show="ctrl.editId === expenses.id.id">
+                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ctrl.edit.date"
+                           is-open="ctrl.popupEditOpened" datepicker-options="ctrl.dateOptions" ng-required="true"
+                           close-text="Close" name="date" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.openEditDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </td>
+            <td>
+                <div ng-show="ctrl.editId !== expenses.id.id">
+                    {{expenses.description}}
+                </div>
+                <div ng-show="ctrl.editId === expenses.id.id">
+                    <input type="text" name="description" class="form-control" ng-model="ctrl.edit.description" required />
+                </div>
+            </td>
+            <td>
+                <div ng-show="ctrl.editId !== expenses.id.id">
+                    {{expenses.value | currency:'€ ':2}}
+                </div>
+
+                <div ng-show="ctrl.editId === expenses.id.id">
+                    <input type="number" name="value" class="form-control" ng-model="ctrl.edit.value" required />
+                </div>
+            </td>
+            <td class="action">
+                <div ng-show="ctrl.editId !== expenses.id.id">
+                    <span title="Edit" ng-click="ctrl.editExpenses(expenses.id.id)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </span>
+                    <span title="Delete" ng-click="ctrl.deleteExpenses(expenses.id.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </span>
+                </div>
+
+                <div ng-show="ctrl.editId === expenses.id.id">
+                    <span title="Save" ng-click="ctrl.saveEditedExpenses()">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </span>
+
+                    <span title="Cancel" ng-click="ctrl.cancelEditedExpenses()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </span>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Add new expenses</h3>
+    <form name="newExpenses" class="form-inline expenses-form" novalidate>
+        <div class="form-group">
+            <p class="input-group date-input">
+                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ctrl.newExpenses.date"
+                       is-open="ctrl.popupOpened" datepicker-options="ctrl.dateOptions" ng-required="true"
+                       close-text="Close" name="date" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="description" class="form-control" placeholder="Description" ng-model="ctrl.newExpenses.description" required />
+        </div>
+
+        <div class="form-group">
+            <input type="number" name="value" class="form-control" placeholder="Value" ng-model="ctrl.newExpenses.value" required />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary add-button" ng-click="ctrl.addExpenses()" value="Add it!" />
+        </div>
+
+    </form>
+</div>
