@@ -1,10 +1,8 @@
 {
   "name": "Expenses",
   "scripts": {
-    "build": "rimraf dist && webpack --bail --progress --profile",
-    "server": "webpack-dev-server --history-api-fallback --inline --progress --port 3000",
-    "test": "karma start",
-    "test-watch": "karma start --auto-watch --no-single-run"
+    "build": "webpack",
+    "server": "webpack-dev-server --history-api-fallback --inline --progress --port 3000"
   },
   "dependencies": {
     "angular": "^1.6.0",
